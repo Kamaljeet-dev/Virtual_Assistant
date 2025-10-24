@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Apple AI</title>
+        <link rel="shortcut icon" href="AI.webp" type="image/x-icon">
+        <style>
+        *{
+            box-sizing: border-box;
+            padding: 0;
+            margin: 0;
+            
+        }
+ 
+        body{
+            height: 100vh;
+            width: 100%;
+            background: black;
+
+        }
+        .container{
+            display: flex;
+            align-items: center;
+            flex-direction: column;
+            gap: 50px;
+
+        }
+         .ai-img
+        {
+            height: 300px;
+            animation: ani 1.5s alternate infinite;
+            filter: drop-shadow(0px 0px 100px  white);
+        }
+        @keyframes ani {
+            from {
+                transform: translateY(5px);
+            }
+            to {
+                transform: translateY(-5px);
+            }
+            
+        }
+        .container h1{
+            color: white;
+        }
+        .container h1 span {
+            color: yellow;
+        }
+        .siri
+        {
+            width: 300px;
+            display: none;
+            margin-top: -40px;
+        }
+        .btn
+        {
+            padding: 10px;
+            width: 40%;
+            background: linear-gradient(to bottom right,black,yellow);
+            color: white;
+            font-weight: bolder;
+            border-radius: 20px;
+            transition: 0.5s;
+            border: 2px solid black;
+        }
+        .btn:hover
+        {
+            letter-spacing: 2px;
+        }
+        .container h1 .js-ani{
+            color: white;
+            text-shadow: 0 0 10px yellow,
+          0 0 20px yellow,
+          0 0 30px yellow,
+          0 0 40px yellow,
+          0 0 50px yellow;
+        }
+        .container .cont{
+            text-align: center;
+
+        }
+        .wishMe{
+            padding: 10px;
+            width: 40%;
+            background: linear-gradient(to bottom right,black,yellow);
+            color: white;
+            font-weight: bolder;
+            border-radius: 20px;
+            transition: 0.5s;
+            border: 2px solid black;
+            margin-top: -40px;
+        }
+        .wishMe:hover{
+            letter-spacing: 2px;
+        }
+    </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="img">
+                <img src="robo-removebg-preview.png" alt class="ai-img">
+            </div>
+            <h1 class="cont">I'm <span>Simran </span><span
+                    class="js-ani"></span></h1>
+
+            <img src="Siri.gif" alt class="siri">
+            <button class="btn"><i class="fa-solid fa-microphone"></i><span
+                    class="btn-content">Click here for talk to
+                    me</span></button>
+            <button class="wishMe">Start AI</button>
+        </div>
+
+        <script src="https://kit.fontawesome.com/c3c2276c69.js"
+            crossorigin="anonymous"></script>
+        <script src="https://cdn.jsdelivr.net/npm/typed.js@2.0.12"></script>
+        <script>
+    
+let typer = new Typed(".js-ani", {
+  strings: ["I'm Virtual Assistant"],
+  typeSpeed: 100,
+  backSpeed: 100,
+  backDelay: 1000,
+  loop: true
+});
+
+let btn = document.querySelector(".btn");  
+let content = document.querySelector(".btn-content");
+let wish = document.querySelector(".wishMe");
+let siri = document.querySelector(".siri");
+let cont = document.querySelector(".cont");
+let on=false;
+let user = prompt("Please enter your name");
+
+function speak(message)
+{
+    let message_speak= new SpeechSynthesisUtterance(message);
+    message_speak.rate=1;
+    message_speak.pitch=1;
+    message_speak.volume=1;
+    message_speak.lang = "hi-IN";
+    window.speechSynthesis.speak(message_speak);
+}
+function speak1(message)
+{
+    let message_speak= new SpeechSynthesisUtterance(message);
+    message_speak.rate=1;
+    message_speak.pitch=1;
+    message_speak.volume=1;
+    message_speak.lang = "hi-IN";
+    window.speechSynthesis.speak(message_speak);
+}
+
+function wishMe()
+{
+    on=true;
+        speak(`Welcome back ${user} I'm Simran what can I help you`);
+}
+
+wish.addEventListener("click",() =>{
+    wishMe();
+});
+
+let speech = window.SpeechRecognition || window.webkitSpeechRecognition;
+let recognition = new speech();
+recognition.onresult = (event)=> {
+
+    console.log(event);
+    let transcript =  event.results[0][0].transcript;
+    content.innerText = transcript;
+    takeCommand(transcript.toLowerCase());
+
+}
+
+btn.addEventListener("click",()=> {
+    if(on==true){
+    recognition.start();
+    siri.style.display = "block";
+    btn.style.display = "none";
+    wish.style.display = "none";
+    cont.style.display = "none";
+    }else{
+    speak1("Please start First");
+    }   
+});
+
+
+function takeCommand(message)
+{
+const sites = {
+  // 🌍 Search & Tools
+  google: "https://www.google.com",
+  bing: "https://www.bing.com",
+  yahoo: "https://www.yahoo.com",
+  duckduckgo: "https://www.duckduckgo.com",
+  wikipedia: "https://www.wikipedia.org",
+
+  // 📱 Social Media
+  facebook: "https://www.facebook.com",
+  instagram: "https://www.instagram.com",
+  twitter: "https://www.twitter.com",
+  x: "https://www.twitter.com",
+  snapchat: "https://web.snapchat.com",
+  tiktok: "https://www.tiktok.com",
+  reddit: "https://www.reddit.com",
+  pinterest: "https://www.pinterest.com",
+  threads: "https://www.threads.net",
+
+  // 🎥 Entertainment
+  youtube: "https://www.youtube.com",
+  netflix: "https://www.netflix.com",
+  primevideo: "https://www.primevideo.com",
+  disneyplus: "https://www.disneyplus.com",
+  hotstar: "https://www.hotstar.com",
+  spotify: "https://open.spotify.com",
+  soundcloud: "https://soundcloud.com",
+  gaana: "https://gaana.com",
+  jiosaavn: "https://www.jiosaavn.com",
+  mxplayer: "https://www.mxplayer.in",
+
+  // 💼 Work / Professional
+  linkedin: "https://www.linkedin.com",
+  github: "https://github.com",
+  gitlab: "https://gitlab.com",
+  stackoverflow: "https://stackoverflow.com",
+  notion: "https://www.notion.so",
+  slack: "https://slack.com",
+  zoom: "https://zoom.us",
+  canva: "https://www.canva.com",
+  figma: "https://www.figma.com",
+  trello: "https://trello.com",
+  dropbox: "https://www.dropbox.com",
+
+  // 🛒 Shopping
+  amazon: "https://www.amazon.in",
+  flipkart: "https://www.flipkart.com",
+  myntra: "https://www.myntra.com",
+  ajio: "https://www.ajio.com",
+  meesho: "https://www.meesho.com",
+  snapdeal: "https://www.snapdeal.com",
+  ebay: "https://www.ebay.com",
+  aliexpress: "https://www.aliexpress.com",
+
+  // 🧭 Google Apps
+  gmail: "https://mail.google.com",
+  drive: "https://drive.google.com",
+  maps: "https://maps.google.com",
+  photos: "https://photos.google.com",
+  docs: "https://docs.google.com",
+  sheets: "https://sheets.google.com",
+  slides: "https://slides.google.com",
+  meet: "https://meet.google.com",
+  calendar: "https://calendar.google.com",
+  translate: "https://translate.google.com",
+  playstore: "https://play.google.com",
+
+  // 💬 Messaging
+  "web whatsapp": "https://web.whatsapp.com",
+  whatsapp: "whatsapp://",
+  telegram: "https://web.telegram.org",  // ✅ Added Telegram
+  messenger: "https://www.messenger.com",
+  discord: "https://discord.com",
+  skype: "https://www.skype.com",
+  signal: "https://signal.org",
+
+  // 💰 Finance / Banking
+  paypal: "https://www.paypal.com",
+  phonepe: "https://www.phonepe.com",
+  gpay: "https://pay.google.com",
+  paytm: "https://www.paytm.com",
+  bhim: "https://www.bhimupi.org.in",
+
+  // 📰 News & Blogs
+  bbc: "https://www.bbc.com",
+  cnn: "https://www.cnn.com",
+  ndtv: "https://www.ndtv.com",
+  timesofindia: "https://timesofindia.indiatimes.com",
+  hindustantimes: "https://www.hindustantimes.com",
+
+  // 💻 Developer Tools
+  codepen: "https://codepen.io",
+  replit: "https://replit.com",
+  jsfiddle: "https://jsfiddle.net",
+  vercel: "https://vercel.com",
+  netlify: "https://www.netlify.com",
+  firebase: "https://firebase.google.com",
+
+  // ✉️ Email Providers
+  outlook: "https://outlook.live.com",
+  protonmail: "https://proton.me",
+  yahooMail: "https://mail.yahoo.com",
+
+  // 🧠 AI Tools
+  "chat gpt": "https://chat.openai.com",
+  copilot: "https://copilot.microsoft.com",
+  claude: "https://claude.ai",
+  gemini: "https://gemini.google.com",
+  perplexity: "https://www.perplexity.ai",
+
+  // 💻 System / Misc
+  apple: "https://www.apple.com",
+  microsoft: "https://www.microsoft.com",
+  samsung: "https://www.samsung.com",
+  dell: "https://www.dell.com",
+  hp: "https://www.hp.com"
+};
+
+
+    if(message.includes("how are you")){
+        speak("I am Fine");
+    }
+    else if(message.includes("hello") || message.includes("hey")){
+        speak(`Hello ${user} , what can I help you`);
+    }
+    else if(message.includes("who are you"))
+    {
+        speak("I am a virtual assistant, created by Kamaljeet Sir");
+    }
+    else if (message.includes("open calculator")) {
+        speak("Opening Calculator");
+        try{
+        window.open("calculator://");
+        } catch {
+            speak("Sorry, cannot open calculator on this browser.");
+
+        }
+    }
+
+    else if(message.includes("open"))
+    {
+        let found = false;
+        for(let key in sites){
+
+            if(message.includes(key)){
+                speak(`opening ${key}`);
+                setTimeout(()=> {
+                    window.open(sites[key], "_blank");
+                },100);
+                found=true;
+                break;
+            }
+
+        }
+        if(found==false)
+        {
+            speak(`Sorry ${user}, I can't open .`);
+        }
+
+    }
+    else
+    {
+        speak(`this is what i found on internet regarding${message.replace("simran","") || message.replace("simbran","")}`);
+        window.open(`https://www.google.com/search?q=${message.replace("simran","") || message.replace("simbran","")}`, "_blank");
+    }
+    siri.style.display = "none";
+    btn.style.display = "block";
+    wish.style.display = "block";
+    cont.style.display = "block";   
+
+}
+
+
+</script>
+    </body>
+
+</html>
